@@ -1,7 +1,5 @@
 package com.devtor.bookshelf
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -14,12 +12,12 @@ fun BookshelfApp(modifier: Modifier = Modifier) {
         factory = BookshelfViewModel.Factory
     )
     val uiState = viewModel.uiState
-    Scaffold(modifier=modifier) {paddin->
-        HomeScreen(
-            uiState = uiState,
-            modifier = modifier.padding(paddin)
-        )
-    }
+    HomeScreen(
+        uiState = uiState,
+        modifier = modifier
+    )
 
 }
+
+
 
