@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -33,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -49,7 +51,8 @@ fun HomeScreen(
     isShowingHomePage: Boolean,
     currentBook: BookInfo? = null,
     onCardClick: (book: BookInfo) -> Unit,
-    onBackPressed:()->Unit
+    onBackPressed:()->Unit,
+    retryAction: () -> Unit,
 ) {
     when (uiState) {
         is BookshelfUiState.Loading -> LoadingScreen()
@@ -66,7 +69,7 @@ fun HomeScreen(
 
         }
 
-        is BookshelfUiState.Error -> ErrorScreen(modifier = modifier)
+        is BookshelfUiState.Error -> ErrorScreen(modifier = modifier, retryAction)
     }
 }
 
@@ -166,7 +169,7 @@ fun ContentDetail(
     BackHandler {
         onBackPressed()
     }
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = modifier.verticalScroll(rememberScrollState()).fillMaxSize()) {
         Box(
             modifier = Modifier
                 .padding(top = 64.dp)
@@ -177,8 +180,10 @@ fun ContentDetail(
                 model = urlImage,
                 contentDescription = book.description,
                 contentScale = ContentScale.Crop,
+                placeholder = painterResource(R.drawable.loading_img),
+                error = painterResource(R.drawable.ic_broken_image),
                 modifier = Modifier
-                    .fillMaxHeight(0.4f)
+                    .height(300.dp)
                     .clip(shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)),
             )
         }

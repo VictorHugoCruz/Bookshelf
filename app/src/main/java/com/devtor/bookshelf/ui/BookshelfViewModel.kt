@@ -38,7 +38,7 @@ class BookshelfViewModel(
         loadBooks()
     }
 
-    private fun loadBooks() {
+    fun loadBooks() {
         viewModelScope.launch {
             try {
                 val books = bookshelfRepository.getBookshelfData()

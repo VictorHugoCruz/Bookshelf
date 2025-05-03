@@ -18,6 +18,7 @@ fun BookshelfApp(modifier: Modifier = Modifier) {
         currentBook = viewModel.currentBook,
         onCardClick = { viewModel.showingDetailScreen(it) },
         onBackPressed = {viewModel.onBack()},
+        retryAction = {viewModel.loadBooks()},
         modifier = modifier
     )
 
